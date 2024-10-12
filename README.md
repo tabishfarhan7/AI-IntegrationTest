@@ -7,5 +7,5 @@ Step 2:
 Step 3:
   node server.mjs  
 Step 4:
-  Run index.html on live server
+  Run index.html on live server\
 Bot is ready now.
