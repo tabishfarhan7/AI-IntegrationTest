@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Chat</title>
   <link href="aifrontend.css" rel="stylesheet">
+  <!-- <style>
+    /
+  </style> -->
 </head>
 <body>
   <div id="container">
@@ -40,7 +43,7 @@
 
       // Send input to the backend
       try {
-        const response = await fetch('/.netlify/functions/ask', { // Updated to use Netlify function
+        const response = await fetch('http://localhost:3000/api/ask', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
