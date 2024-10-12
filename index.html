@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Chat</title>
   <link href="aifrontend.css" rel="stylesheet">
+  <!-- <style>
+    /
+  </style> -->
 </head>
 <body>
   <div id="container">
@@ -22,18 +25,18 @@
     const chatbox = document.getElementById('chatbox');
     const inputField = document.getElementById('input');
     const chatForm = document.getElementById('chatForm');
+
     chatForm.addEventListener('submit', (e) => {
-      e.preventDefault(); 
+      e.preventDefault();
       handleSendMessage();
     });
-
     const handleSendMessage = async () => {
       const input = inputField.value.trim();
       if (input === "") return;
       displayMessage(input, 'user');
-      inputField.value = ''; //input ek bar lene ke baad khali krdo
+      inputField.value = ''; 
       try {
-        const response = await fetch('/.netlify/functions/ask', { // Updated to use Netlify function
+        const response = await fetch('http://localhost:3000/api/ask', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -52,30 +55,29 @@
         displayMessage('Error connecting to the server.', 'ai');
       }
     };
-    
+
     const displayMessage = (message, type) => {
       const msgDiv = document.createElement('div');
       msgDiv.classList.add('message', type);
       msgDiv.textContent = message;
       chatbox.appendChild(msgDiv);
-      chatbox.scrollTop = chatbox.scrollHeight; // bottom pe scroll
+      chatbox.scrollTop = chatbox.scrollHeight; //bottom tk scroll karne ke lie
     };
-    //word to word dikhane ke lie
+    //word to word response dene ke lie
     const displayAIResponseWordByWord = (message) => {
       const words = message.split(' ');
       let index = 0;
-
       const msgDiv = document.createElement('div');
       msgDiv.classList.add('message', 'ai');
       chatbox.appendChild(msgDiv);
-
       const typeWord = () => {
         if (index < words.length) {
           msgDiv.textContent += words[index] + ' ';
           index++;
-          setTimeout(typeWord, 100); 
-        } else {
-          chatbox.scrollTop = chatbox.scrollHeight; // bottom pe scroll hojega is se
+          setTimeout(typeWord, 100); //delayy in typing 
+        } 
+        else {
+          chatbox.scrollTop = chatbox.scrollHeight; 
         }
       };
 

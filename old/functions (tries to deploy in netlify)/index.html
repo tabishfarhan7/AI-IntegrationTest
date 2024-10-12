@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Chat</title>
   <link href="aifrontend.css" rel="stylesheet">
-  <!-- <style>
-    /
-  </style> -->
 </head>
 <body>
   <div id="container">
@@ -25,25 +22,18 @@
     const chatbox = document.getElementById('chatbox');
     const inputField = document.getElementById('input');
     const chatForm = document.getElementById('chatForm');
-
-    // Prevent form submission from refreshing the page
     chatForm.addEventListener('submit', (e) => {
-      e.preventDefault(); // Prevent the form from submitting
+      e.preventDefault(); 
       handleSendMessage();
     });
 
-    // Handle sending message to the backend
     const handleSendMessage = async () => {
       const input = inputField.value.trim();
-      if (input === "") return; // No empty input allowed
-
-      // Display the user's message
+      if (input === "") return;
       displayMessage(input, 'user');
-      inputField.value = ''; // Clear the input field
-
-      // Send input to the backend
+      inputField.value = ''; //input ek bar lene ke baad khali krdo
       try {
-        const response = await fetch('http://localhost:3000/api/ask', {
+        const response = await fetch('/.netlify/functions/ask', { // Updated to use Netlify function
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -62,17 +52,15 @@
         displayMessage('Error connecting to the server.', 'ai');
       }
     };
-
-    // Function to display message in the chatbox
+    
     const displayMessage = (message, type) => {
       const msgDiv = document.createElement('div');
       msgDiv.classList.add('message', type);
       msgDiv.textContent = message;
       chatbox.appendChild(msgDiv);
-      chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+      chatbox.scrollTop = chatbox.scrollHeight; // bottom pe scroll
     };
-
-    // Display AI response word by word
+    //word to word dikhane ke lie
     const displayAIResponseWordByWord = (message) => {
       const words = message.split(' ');
       let index = 0;
@@ -85,9 +73,9 @@
         if (index < words.length) {
           msgDiv.textContent += words[index] + ' ';
           index++;
-          setTimeout(typeWord, 200); // Adjust typing speed (200ms delay)
+          setTimeout(typeWord, 100); 
         } else {
-          chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom after typing
+          chatbox.scrollTop = chatbox.scrollHeight; // bottom pe scroll hojega is se
         }
       };
 

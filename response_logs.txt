@@ -1,0 +1,20 @@
+User Input: Hi
+AI Response: Hello! How can I assist you today?
+Response Time: 7525.34 ms
+
+User Input: Hi
+AI Response: Hello! How can I assist you today?
+Response Time: 4545.45 ms
+
+User Input: How are you
+AI Response: I'm doing well, thank you! How about you?
+Response Time: 3965.00 ms
+
+User Input: hi
+AI Response: Hello! How can I assist you today?
+Response Time: 5237.74 ms
+
+User Input: hi
+AI Response: Hello! How can I assist you today?
+Response Time: 4579.87 ms
+
