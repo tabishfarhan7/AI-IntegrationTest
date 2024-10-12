@@ -1,6 +1,6 @@
 [build]
   functions = "functions" # Specifies the functions directory
-  publish = "public" # If your frontend files are in a "public" directory, adjust accordingly
+  publish = "/" # If your frontend files are in a "public" directory, adjust accordingly
 
 [[redirects]]
   from = "/api/*"
