@@ -1,8 +1,9 @@
 For now , it is made to be run on local machine
+
 Step 1:
-  Clone the repo
+  Clone the repo\
 Step 2:
-  npm install
+  npm install\
 Step 3:
   node server.mjs  
 Step 4:
