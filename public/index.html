@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat</title>
+  <link href="aifrontend.css" rel="stylesheet">
+</head>
+<body>
+  <div id="container">
+    <div id="header">AI Chatbot</div>
+    <div id="chatbox"></div>
+    <div id="inputContainer">
+      <form id="chatForm" onsubmit="return false;">
+        <input type="text" id="input" placeholder="Ask something..." required>
+        <button id="sendButton">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const inputField = document.getElementById('input');
+    const chatForm = document.getElementById('chatForm');
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault(); 
+      handleSendMessage();
+    });
+
+    const handleSendMessage = async () => {
+      const input = inputField.value.trim();
+      if (input === "") return;
+      displayMessage(input, 'user');
+      inputField.value = ''; //input ek bar lene ke baad khali krdo
+      try {
+        const response = await fetch('/.netlify/functions/ask', { // Updated to use Netlify function
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ input }),
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+          displayMessage(`Error: ${data.error}`, 'ai');
+        } else {
+          displayAIResponseWordByWord(data.response);
+        }
+      } catch (error) {
+        displayMessage('Error connecting to the server.', 'ai');
+      }
+    };
+    
+    const displayMessage = (message, type) => {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', type);
+      msgDiv.textContent = message;
+      chatbox.appendChild(msgDiv);
+      chatbox.scrollTop = chatbox.scrollHeight; // bottom pe scroll
+    };
+    //word to word dikhane ke lie
+    const displayAIResponseWordByWord = (message) => {
+      const words = message.split(' ');
+      let index = 0;
+
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', 'ai');
+      chatbox.appendChild(msgDiv);
+
+      const typeWord = () => {
+        if (index < words.length) {
+          msgDiv.textContent += words[index] + ' ';
+          index++;
+          setTimeout(typeWord, 100); 
+        } else {
+          chatbox.scrollTop = chatbox.scrollHeight; // bottom pe scroll hojega is se
+        }
+      };
+
+      typeWord();
+    };
+  </script>
+</body>
+</html>
